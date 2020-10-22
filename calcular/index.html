@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Hemerson Lucena">
+	<meta name="url" content="github.com/cnhemerson">
+	<title>Calculadora de Notas</title>
+	<style type="text/css">
+		*{
+			font-family: 'Verdana', sans-serif;
+		}
+		.number-display{
+			width: 3em;
+		}
+		.input-slider{
+			width: 100%;
+		}
+		.container{
+			max-width: 600px;
+			margin: 0 auto;
+		}
+		.header > h1{
+			text-align: center;
+		}
+		.results-display{
+			margin-top: 15px;
+			background-color: #EBEBEB;
+			padding: 0 5em;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<h1>Calculadora de notas - Medicina</h1>
+		</div>
+		<div class="input-holder">
+			<p class="input-title">Nota ACCP: <input value="7" type="number" id="number-accp" min="0" max="10" step="0.1" onchange="update_everything('number-accp','accp-range')" class="number-display"></p>
+			<input value="7" type="range" min="0" max="10" step="0.1" oninput="update_everything('accp-range','number-accp')" id="accp-range" class="input-slider">
+		</div>
+		<div class="input-holder">
+			<p class="input-title">Nota ACCF: <input value="7" type="number" id="number-accf" min="0" max="10" step="0.1" onchange="update_everything('number-accf','accf-range')" class="number-display"></p>
+			<input value="7" type="range" min="0" max="10" step="0.1" oninput="update_everything('accf-range','number-accf')" id="accf-range" class="input-slider">
+		</div>
+		<div class="input-holder">
+			<p class="input-title">Nota do GT: <input value="0.5" type="number" id="number-gt" min="0" max="1" step="0.1" onchange="update_everything('number-gt','gt-range')" class="number-display"></p>
+			<input value="0.5" type="range" min="0" max="1" step="0.1" oninput="update_everything('gt-range','number-gt')" id="gt-range" class="input-slider">
+		</div>
+		<div class="input-holder">
+			<p class="input-title">Nota OSCE: <input value="7" type="number" id="number-osce" min="0" max="10" step="0.1" onchange="update_everything('number-osce','osce-range')" class="number-display"></p>
+			<input value="7" type="range" min="0" max="10" step="0.1" oninput="update_everything('osce-range','number-osce')" id="osce-range" class="input-slider">
+		</div>
+		<div class="results-display">
+			<p>Nota teórica final: <span id="ntf-output"> </span></p>
+			<p>Média da unidade: <span id="mdu-output"> </span></p>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function calculate(){
+			accp = Number(document.getElementById('number-accp').value);
+			accf = Number(document.getElementById('number-accf').value);
+			gt = Number(document.getElementById('number-gt').value);
+			osce = Number(document.getElementById('number-osce').value);
+
+			notatf = (accp*0.4) + (accf*0.6);
+
+			mediadu = (notatf + gt + osce)/2;
+
+			document.getElementById('ntf-output').innerHTML = notatf.toFixed(2);
+			document.getElementById('mdu-output').innerHTML = mediadu.toFixed(2);
+
+			return;
+		}
+		function update_everything(caller, caller_brother) {
+			caller = document.getElementById(caller);
+			caller_brother = document.getElementById(caller_brother);
+
+			caller_brother.value = caller.value;
+			calculate();
+		}
+	</script>
+</body>
+</html>
